@@ -26,9 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		//super없애서 재정의한다.
 		http.
 			authorizeRequests()
-				.antMatchers("/user/**","/admin/**").authenticated() // security 타게함
-				.anyRequest().permitAll()
-				.and()
+			.antMatchers("/user/**").authenticated()
+			//.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+			//.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_USER')")
+			.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+			.anyRequest().permitAll()
+		.and()
 			.formLogin()
 				.loginPage("/login")
 				.loginProcessingUrl("/loginProc")
